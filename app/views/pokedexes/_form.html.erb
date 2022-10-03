@@ -1,0 +1,62 @@
+<%= form_with model: pokedex do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+    <% pokedex.errors.full_messages_for(:name).each do |message| %>
+      <div><% message %></div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :base_health_point, class: "form-label" %>
+    <%= form.text_field :base_health_point, class: "form-control" %>
+    <% pokedex.errors.full_messages_for(:base_health_point).each do |message| %>
+      <div><% message %></div>
+    <% end %>
+
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :base_attack, class: "form-label" %>
+    <%= form.text_field :base_attack, class: "form-control" %>
+    <% pokedex.errors.full_messages_for(:base_attack).each do |message| %>
+      <div><% message %></div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :base_defence, class: "form-label" %>
+    <%= form.text_field :base_defence, class: "form-control" %>
+    <% pokedex.errors.full_messages_for(:base_defence).each do |message| %>
+      <div><% message %></div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :base_speed, class: "form-label" %>
+    <%= form.text_field :base_speed, class: "form-control" %>
+    <% pokedex.errors.full_messages_for(:base_speed).each do |message| %>
+      <div><% message %></div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :element_type, class: "form-label" %>
+    <%= select_tag(:category, options_for_select(@element_type), class: "form-select") %>
+    <% pokedex.errors.full_messages_for(:element_type).each do |message| %>
+      <div><% message %></div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :image_url, class: "form-label" %>
+    <%= form.text_field :image_url, class: "form-control" %>
+    <% pokedex.errors.full_messages_for(:image_url).each do |message| %>
+      <div><% message %></div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit(class: "btn btn-primary") %>
+  </div>
+<% end %>

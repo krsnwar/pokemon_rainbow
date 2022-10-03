@@ -1,0 +1,48 @@
+<div class="d-flex flex-column min-vh-100">
+  <%= render "layouts/navbar" %>
+
+  <div class="container mt-3">
+    <div class="d-flex justify-content-between">
+      <div>
+        <h1>List of all Pokedex</h1>
+      </div>
+      <div>
+        <button class="btn btn-primary">Add Pokedex</button>
+      </div>
+    </div>
+    <br>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Image</th>
+          <th>Base Health Point</th>
+          <th>Base Attack</th>
+          <th>Base Defence</th>
+          <th>Base Speed</th>
+          <th>Element Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% count = 1 %>
+        <% @pokedexes.each do |pokedex| %>
+          <tr>
+            <td><%= count %></td>
+            <td><%= link_to pokedex.name, pokedex %></td>
+            <td><%= pokedex.image_url %></td>
+            <td><%= pokedex.base_health_point %></td>
+            <td><%= pokedex.base_attack %></td>
+            <td><%= pokedex.base_defence %></td>
+            <td><%= pokedex.base_speed %></td>
+            <td><%= pokedex.element_type %></td>
+          </tr>
+          <% count += 1 %>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+
+  <%= render "layouts/footer" %>
+</div>
