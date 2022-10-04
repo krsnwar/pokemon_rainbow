@@ -15,4 +15,16 @@ namespace :pokemon_rainbow do
     end
   end
 
+  task import_skill: :environment do
+    raw = URI.open('https://docs.google.com/spreadsheets/d/e/2PACX-1vThWOVIdEFwM9nTbU8Ecd8SO27uMcMINSwRZ7_43uOHqDUVd3sARck7rCbxplJ8cM3TOYrdsHyj8-2a/pub?gid=0&single=true&output=csv'){|f| f.read}
+    csv_text = CSV.parse(raw)
+    keys = csv_text.shift
+    csv_text.map! { |row| Hash[keys.zip(row)] }
+
+    csv_text.each do |skill_attrib|
+      skill = Skill.new(skill_attrib)
+      skill.save
+    end
+  end
+
 end

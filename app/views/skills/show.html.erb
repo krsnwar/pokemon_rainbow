@@ -1,0 +1,50 @@
+<div class="d-flex flex-column min-vh-100">
+  <%= render "layouts/navbar" %>
+
+  <div class="container mt-3">
+    <% flash.each do |message| %>
+      <div class="alert alert-success" role="alert">
+        <strong>Congratulations! </strong><%= message[1] %>
+      </div>
+    <% end %>
+    <h1>Skill Detail</h1>
+    <div class="mt-3 d-flex justify-content-end">
+      <%= link_to "Edit", edit_skill_path(@skill), class: "btn btn-primary" %>
+      &nbsp
+      &nbsp
+      <%= link_to "Delete", skill_path(@skill), class: "btn btn-danger", data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %>
+    </div>
+    <div class="mt-3 d-flex justify-content-center">
+      <div>
+        <table class="table align-middle">
+          <tbody>
+            <tr>
+              <td colspan="2">
+                <span>
+                  <h2><%= @skill.name.titleize %></h2>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td style="min-width: 400px" class="h5">Power</td>
+              <td><%= @skill.power %></td>
+            </tr>
+            <tr>
+              <td class="h5">Max PP</td>
+              <td><%= @skill.max_pp %></td>
+            </tr>
+            <tr>
+              <td class="h5">Element Type</td>
+              <td><%= @skill.element_type.titleize %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <%= render "layouts/footer" %>
+</div>
