@@ -1,0 +1,38 @@
+<%= form_with model: skill do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+    <% skill.errors.full_messages_for(:name).each do |message| %>
+      &nbsp<small style="color: red"><%= message %></small>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :power, class: "form-label" %>
+    <%= form.number_field :power, class: "form-control" %>
+    <% skill.errors.full_messages_for(:power).each do |message| %>
+      &nbsp<small style="color: red"><%= message %></small>
+    <% end %>
+
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :max_pp, class: "form-label" %>
+    <%= form.number_field :max_pp, class: "form-control" %>
+    <% skill.errors.full_messages_for(:max_pp).each do |message| %>
+      &nbsp<small style="color: red"><%= message %></small>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :element_type, class: "form-label" %>
+    <%= form.select(:element_type, Skill::ELEMENT_TYPES.map{ |type| [type.titleize, type] }, {}, class: "form-select") %>
+    <% skill.errors.full_messages_for(:element_type).each do |message| %>
+      &nbsp<small style="color: red"><%= message %></small>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit(class: "btn btn-primary") %>
+  </div>
+<% end %>
