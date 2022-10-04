@@ -3,7 +3,8 @@ require 'pry'
 class PokedexesController < ApplicationController
 
   def index
-    @pokedexes = Pokedex.all
+    @pokedexes = Pokedex.order(:id).page params[:page]
+    @current_page = params[:page].present? ? params[:page].to_i : 1
   end
 
   def new
