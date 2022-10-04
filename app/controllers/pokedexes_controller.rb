@@ -1,3 +1,5 @@
+require 'pry'
+
 class PokedexesController < ApplicationController
 
   def index
@@ -6,12 +8,16 @@ class PokedexesController < ApplicationController
 
   def new
     @pokedex = Pokedex.new
-    @element_type = [["Normal", "normal"], ["Fighting", "fighting"], ["Flying", "flying"], ["Poison", "poison"], ["Ground", "ground"], ["Rock", "rock"], ["Bug", "bug"], ["Ghost", "ghost"], ["Steel", "steel"], ["Fire", "fire"], ["Water", "water"], ["Grass", "grass"], ["Electric", "electric"], ["Psychic", "psychic"], ["Ice", "ice"], ["Dragon", "dragon"], ["Dark", "dark"], ["Fairy", "fairy"]]
   end
 
   def create
     @pokedex = Pokedex.new(pokedex_params)
-
+    
+    if @pokedex.valid? && @pokedex.save
+      redirect_to @pokedex, flash: { success: "Pokedex has successfully been created" }
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def show

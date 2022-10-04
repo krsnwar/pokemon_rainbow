@@ -2,8 +2,13 @@
   <%= render "layouts/navbar" %>
 
   <div class="container mt-3 w-75">
-    <h1>Add new Pokedex</h1>
-    <%= @pokedex %>
+    <% flash.each do |message| %>
+      <div class="alert alert-success" role="alert">
+        <strong>Congratulations! </strong><%= message[1] %>
+      </div>
+    <% end %>
+    <h1>Show Pokedex</h1>
+    <%= @pokedex.attributes %>
   </div>
 
   <%= render "layouts/footer" %>
