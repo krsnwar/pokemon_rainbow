@@ -6,6 +6,10 @@ class PokedexesController < ApplicationController
     @pokedexes = Pokedex.order(:id).page params[:page]
     @current_page = params[:page].present? ? params[:page].to_i : 1
   end
+  
+  def show
+    @pokedex = Pokedex.find(params[:id])
+  end
 
   def new
     @pokedex = Pokedex.new
@@ -15,14 +19,32 @@ class PokedexesController < ApplicationController
     @pokedex = Pokedex.new(pokedex_params)
     
     if @pokedex.valid? && @pokedex.save
-      redirect_to @pokedex, flash: { success: "Pokedex has successfully been created" }
+      redirect_to @pokedex, flash: { message: "Successfully created pokedex: #{@pokedex.name.titleize}" }
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-  def show
+  def edit
     @pokedex = Pokedex.find(params[:id])
+  end
+
+  def update
+    @pokedex = Pokedex.find(params[:id])
+
+    if @pokedex.update(pokedex_params)
+      redirect_to @pokedex, flash: { message: "Pokedex has successfully been edited" }
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @pokedex = Pokedex.find(params[:id])
+    pokedex_name = @pokedex.name
+    @pokedex.destroy
+
+    redirect_to pokedexes_path, flash: { message: "Pokedex #{pokedex_name.titleize} has successfully been deleted" }, status: :see_other
   end
 
   private

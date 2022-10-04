@@ -1,0 +1,10 @@
+<div class="d-flex flex-column min-vh-100">
+  <%= render "layouts/navbar" %>
+
+  <div class="container mt-3">
+    <h1>Edit Pokedex: <%= @pokedex.name %></h1>
+    <%= render "form", pokedex: @pokedex %>
+  </div>
+
+  <%= render "layouts/footer" %>
+</div>

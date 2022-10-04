@@ -12,6 +12,12 @@
       </div>
     </div>
     <br>
+    <% flash.each do |message| %>
+      <div class="alert alert-success" role="alert">
+        <strong>Congratulations! </strong><%= message[1] %>
+      </div>
+    <% end %>
+    <br>
     <table class="table table-striped align-middle">
       <thead>
         <tr>
@@ -42,8 +48,10 @@
         <% end %>
       </tbody>
     </table>
-    <div class="d-flex justify-content-center my-5">
-      <%= paginate @pokedexes %>
+    <div class="d-flex my-5">
+      <div class="ms-auto">
+        <%= paginate @pokedexes %>
+      </div>
     </div>
   </div>
 
