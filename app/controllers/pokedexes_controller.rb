@@ -3,7 +3,12 @@ require 'pry'
 class PokedexesController < ApplicationController
 
   def index
-    @pokedexes = Pokedex.order(:id).page params[:page]
+    if params[:search].present?
+      @pokedexes = Pokedex.where("pokedexes.name LIKE ?", "%#{params[:search]}%")
+      @pokedexes = @pokedexes.page (params[:page])
+    else
+      @pokedexes = Pokedex.order(:id).page params[:page]
+    end
     @current_page = params[:page].present? ? params[:page].to_i : 1
   end
   

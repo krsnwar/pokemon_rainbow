@@ -7,7 +7,6 @@
         <h1>List of all Pokedex</h1>
       </div>
       <div class="my-auto">
-        <%# <button class="btn btn-primary">Add Pokedex</button> %>
         <%= link_to "Add Pokedex", new_pokedex_path, class: "btn btn-primary" %>
       </div>
     </div>
@@ -17,6 +16,12 @@
         <strong>Congratulations! </strong><%= message[1] %>
       </div>
     <% end %>
+    <div class="d-flex justify-content-end">
+      <form class="d-flex" role="search" action="<%= pokedexes_path %>">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
     <br>
     <table class="table table-striped align-middle">
       <thead>
