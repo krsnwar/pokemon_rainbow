@@ -5,13 +5,17 @@ class Pokemon < ApplicationRecord
   end
 
   belongs_to :pokedex
+  has_many :pokemon_skills
+  has_many :skills, through: :pokemon_skills, source: :skill
 
   validates :name, uniqueness: true, presence: true
-  validates :level, presence: true, numericality: { only_integer: true }
-  validates :max_health_point, presence: true, numericality: { only_integer: true }
-  validates :current_health_point, presence: true, numericality: { only_integer: true }
-  validates :attack, presence: true, numericality: { only_integer: true }
-  validates :defence, presence: true, numericality: { only_integer: true }
-  validates :speed, presence: true, numericality: { only_integer: true }
-  validates :current_experience, presence: true, numericality: { only_integer: true }
+  validates :level, presence: true, numericality: { only_integer: true, grater_than: 0 }
+  validates :max_health_point, presence: true, numericality: { only_integer: true, grater_than: 0 }
+  validates :current_health_point, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :attack, presence: true, numericality: { only_integer: true, grater_than: 0 }
+  validates :defence, presence: true, numericality: { only_integer: true, grater_than: 0 }
+  validates :speed, presence: true, numericality: { only_integer: true, grater_than: 0 }
+  validates :current_experience, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+  # accept nested attributes pokemon skills (composite)
 end
