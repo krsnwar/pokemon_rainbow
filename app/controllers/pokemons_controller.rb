@@ -19,6 +19,8 @@ class PokemonsController < ApplicationController
   end
 
   def create
+    @poke = params
+    binding.pry
     pokedex_info = Pokedex.find(pokemon_params[:pokedex_id])
     @pokemon = Pokemon.new(pokemon_params)
     @pokemon.max_health_point = pokedex_info.base_health_point
@@ -48,6 +50,32 @@ class PokemonsController < ApplicationController
     end
   end
 
+  def edit_skill
+    @pokemon = Pokemon.find(params[:id])
+    # @skills = Skill.where("skills.element_type LIKE ?", "%#{Pokedex.find(@pokemon.pokedex_id).element_type}%").where.not()
+    @skills = Skill.where(element_type: [@pokemon.pokedex.element_type, "normal"]).where.not(id: @pokemon.skills.ids).order(:name)
+  end
+
+  def update_skill
+    @pokemon = Pokemon.find(params[:id])
+    skill_id = skill_pokemon_params[:skill_id]
+    @pokemon_skill = @pokemon.pokemon_skills.build(skill_id: skill_id, current_pp: Skill.find(skill_id).max_pp)
+    
+    if @pokemon_skill.save
+      redirect_to @pokemon, flash: { message: "Skill has successfully been added" }
+    else
+      render :edit_skill, status: :unprocessable_entity
+    end
+  end
+
+  def destroy_skill
+    @skill_to_destroy = PokemonSkill.find(params[:id])
+    @pokemon = Pokemon.find(@skill_to_destroy.pokemon_id)
+    @skill_to_destroy.destroy
+
+    redirect_to @pokemon, flash: { message: "Skill has successfully been deleted" }
+  end
+
   def destroy
     @pokemon = Pokemon.find(params[:id])
     pokemon_name = @pokemon.name
@@ -59,6 +87,10 @@ class PokemonsController < ApplicationController
   private
     def pokemon_params
       params.require(:pokemon).permit(:name, :pokedex_id)
+    end
+
+    def skill_pokemon_params
+      params.require(:skill).permit(:skill_id)
     end
 
 end

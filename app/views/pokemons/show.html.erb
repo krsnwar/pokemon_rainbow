@@ -70,8 +70,13 @@
         </table>
       </div>
     </div>
-    <div class="mt-3">
-      <h2>List Attack</h2>
+    <div class="d-flex justify-content-between mt-3">
+      <div>
+        <h2>List Attack</h2>
+      </div>
+      <div class="my-auto">
+        <%= link_to "Edit Attack", edit_skill_pokemon_path, class: "btn btn-primary" %>
+      </div>
     </div>
     <div class="table-responsive">
       <table class="table table-striped align-middle">
@@ -80,17 +85,30 @@
             <th>#</th>
             <th>Name</th>
             <th>Power</th>
-            <th>Max PP</th>
+            <th>Current PP</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Memukul</td>
-            <td>40</td>
-            <td>56</td>
-          </tr>
-        </tbody>
+
+        <% if @pokemon.skills.present? %>
+          <tbody>
+            <% count = 1 %>
+            <% @pokemon.skills.each do |skill| %>
+              <tr>
+                <td><%= count %></td>
+                <td><%= skill.name.titleize %></td>
+                <td><%= skill.power %></td>
+                <td><%= skill.pokemon_skills[0].current_pp %></td>
+              </tr>
+              <% count += 1 %>
+            <% end %>
+          </tbody>
+        <% else %>
+          <tbody>
+            <tr>
+              <td colspan="4" class="text-center h5">No Attack</td>
+            </tr>
+          </tbody>
+        <% end %>
       </table>
     </div>
   </div>

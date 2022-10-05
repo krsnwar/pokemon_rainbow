@@ -1,0 +1,126 @@
+<div class="d-flex flex-column min-vh-100">
+  <%= render "layouts/navbar" %>
+
+  <div class="container mt-3">
+    <h1>Edit Skill: <%= @pokemon.name %></h1>
+    <div class="mt-3 d-flex justify-content-center">
+      <div class="me-5">
+        <%= image_tag(Pokedex.find(@pokemon.pokedex_id).image_url, class: "img-thumbnail")%>
+      </div>
+      <div class="ms-5 my-auto">
+        <table class="table align-middle">
+          <tbody>
+            <tr>
+              <td class="h5">Name</td>
+              <td><%= @pokemon.name %></td>
+            </tr>
+            <tr>
+              <td style="min-width: 180px" class="h5">Kind</td>
+              <td><%= Pokedex.find(@pokemon.pokedex_id).name.titleize %></td>
+            </tr>
+            <tr>
+              <td class="h5">Type</td>
+              <td><%= Pokedex.find(@pokemon.pokedex_id).element_type.titleize %></td>
+            </tr>
+            <tr>
+              <td class="h5">Level</td>
+              <td><%= @pokemon.level %></td>
+            </tr>
+            <tr>
+              <td class="h5">Health</td>
+              <td><%= "#{@pokemon.current_health_point}/#{@pokemon.max_health_point}" %></td>
+            </tr>
+            <tr>
+              <td class="h5">Attack</td>
+              <td><%= @pokemon.attack %></td>
+            </tr>
+            <tr>
+              <td class="h5">Defence</td>
+              <td><%= @pokemon.defence %></td>
+            </tr>
+            <tr>
+              <td class="h5">Speed</td>
+              <td><%= @pokemon.speed %></td>
+            </tr>
+            <tr>
+              <td class="h5">EXP</td>
+              <td><%= @pokemon.current_experience %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="mt-3">
+        <h2>List Attack</h2>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Power</th>
+              <th>Current PP</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <% if @pokemon.skills.present? %>
+            <tbody>
+              <% count = 1 %>
+              <% @pokemon.skills.each do |skill| %>
+                <tr>
+                  <td><%= count %></td>
+                  <td><%= skill.name.titleize %></td>
+                  <td><%= skill.power %></td>
+                  <td><%= skill.pokemon_skills[0].current_pp %></td>
+                  <td><%= link_to "Delete", destroy_skill_pokemon_path(skill.pokemon_skills[0].id), class: "btn btn-danger", data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></td>
+                </tr>
+                <% count += 1 %>
+              <% end %>
+            </tbody>
+          <% else %>
+            <tbody>
+              <tr>
+                <td colspan="5" class="text-center h5">No Attack</td>
+              </tr>
+            </tbody>
+          <% end %>
+        </table>
+      </div>
+    </div>
+    <div class="mb-3 d-flex justify-content-center">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add Skill
+      </button>
+    </div>
+  </div>
+
+  <%= render "layouts/footer" %>
+</div>
+
+<%# ------------------MODOL-------------------- %>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="<%= update_skill_pokemon_path %>" method="POST">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Skill</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= select_tag("skill[skill_id]", options_for_select(@skills.map{ |row| [row.name.titleize, row.id] }), class: "form-select") %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" value="Submit">Add Skill!</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%# ------------------------------------------- %>
