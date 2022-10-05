@@ -16,6 +16,12 @@
         <strong>Congratulations! </strong><%= message[1] %>
       </div>
     <% end %>
+    <div class="d-flex justify-content-end">
+      <form class="d-flex" role="search" action="<%= skills_path %>">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
     <br>
     <table class="table table-striped align-middle">
       <thead>
