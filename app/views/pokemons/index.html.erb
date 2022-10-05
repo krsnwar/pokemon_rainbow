@@ -1,0 +1,80 @@
+<div class="d-flex flex-column min-vh-100">
+  <%= render "layouts/navbar" %>
+
+  <div class="container mt-3">
+    <div>
+      <h1>Pokemon</h1>
+    </div>
+    <div class="d-flex justify-content-start">
+      <div class="my-auto">
+        <%= link_to "Heal All", "#", class: "btn btn-success" %>
+      </div>
+      &nbsp
+      <div class="my-auto">
+        <%= link_to "Create", new_pokemon_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+    <br>
+    <% flash.each do |message| %>
+      <div class="alert alert-success" role="alert">
+        <strong>Congratulations! </strong><%= message[1] %>
+      </div>
+    <% end %>
+    <div class="d-flex justify-content-end">
+      <form class="d-flex" role="search" action="<%= pokedexes_path %>">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+    <br>
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th style="width: 300px">Name</th>
+          <th>Level</th>
+          <th>Max Health Point</th>
+          <th>Current Health Point</th>
+          <th>Attack</th>
+          <th>Defence</th>
+          <th>Speed</th>
+          <th>Current Experience</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% count = ((@current_page - 1) * 25) + 1 %>
+        <% if @pokemons.present? %>
+          <% @pokemons.each do |pokemon| %>
+            <tr>
+              <td><%= count %></td>
+              <td><%= link_to pokemon.name.titleize, pokemon %></td>
+              <td><%= pokemon.level %></td>
+              <td><%= pokemon.max_health_point %></td>
+              <td><%= pokemon.current_health_point %></td>
+              <td><%= pokemon.attack %></td>
+              <td><%= pokemon.defence %></td>
+              <td><%= pokemon.speed %></td>
+              <td><%= pokemon.current_experience %></td>
+              <td><%= link_to "Heal", "#", class: "btn btn-success" %></td>
+            </tr>
+            <% count += 1 %>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="10" class="text-center">
+              <span class="h5">No Data</span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="d-flex my-5">
+      <div class="ms-auto">
+        <%= paginate @pokemons %>
+      </div>
+    </div>
+  </div>
+
+  <%= render "layouts/footer" %>
+</div>
