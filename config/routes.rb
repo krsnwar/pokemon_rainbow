@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     post :update_skill, on: :member
     delete :destroy_skill, on: :member
   end
+
+  resources 'pokemon_battles'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   
   # Defines the root path route ("/")
