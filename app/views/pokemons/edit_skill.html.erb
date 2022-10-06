@@ -93,7 +93,7 @@
       </div>
     </div>
     <div class="mb-3 d-flex justify-content-center">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" <%= @skills.present? ? "" : "disabled" %>>
         Add Skill
       </button>
     </div>
@@ -102,25 +102,27 @@
   <%= render "layouts/footer" %>
 </div>
 
-<%# ------------------MODOL-------------------- %>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form action="<%= update_skill_pokemon_path %>" method="POST">
-        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Skill</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <%= select_tag("skill[skill_id]", options_for_select(@skills.map{ |row| [row.name.titleize, row.id] }), class: "form-select") %>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" value="Submit">Add Skill!</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<%# ------------------------------------------- %>
+        <%# ------------------MODOL-------------------- %>
+        <% if @skills.present? %>
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form action="<%= update_skill_pokemon_path %>" method="POST">
+                  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Skill</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <%= select_tag("skill[skill_id]", options_for_select(@skills.map{ |row| [row.name.titleize, row.id] }), class: "form-select") %>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" value="Submit">Add Skill!</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <%# ------------------------------------------- %>
