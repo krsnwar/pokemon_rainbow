@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pokemon: one
+  current_turn: 1
+  state: MyString
+  experience_gain: 1
+  pokemon1_max_health_point: 1
+  pokemon2_max_health_point: 1
+
+two:
+  pokemon: two
+  current_turn: 1
+  state: MyString
+  experience_gain: 1
+  pokemon1_max_health_point: 1
+  pokemon2_max_health_point: 1
