@@ -19,7 +19,7 @@
     <% end %>
     <div class="d-flex justify-content-end">
       <form class="d-flex" role="search" action="<%= pokedexes_path %>">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" value="<%= @search_name.present? ? @search_name : "" %>">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
