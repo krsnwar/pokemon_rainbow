@@ -4,10 +4,11 @@ class PokedexesController < ApplicationController
 
   def index
     if params[:search].present?
-      @pokedexes = Pokedex.where("pokedexes.name LIKE ?", "%#{params[:search]}%")
-      @pokedexes = @pokedexes.page (params[:page])
+      @search_name = params[:search]
+      @pokedexes = Pokedex.where("pokedexes.name LIKE ?", "%#{@search_name}%")
+      @pokedexes = @pokedexes.order(:name).page (params[:page])
     else
-      @pokedexes = Pokedex.order(:id).page params[:page]
+      @pokedexes = Pokedex.order(:name).page params[:page]
     end
     @current_page = params[:page].present? ? params[:page].to_i : 1
   end

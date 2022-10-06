@@ -2,7 +2,8 @@ class SkillsController < ApplicationController
   
   def index
     if params[:search].present?
-      @skills = Skill.where("skills.name LIKE ?", "%#{params[:search]}%")
+      @search_name = params[:search]
+      @skills = Skill.where("skills.name LIKE ?", "%#{@search_name}%")
       @skills = @skills.page (params[:page])
     else
       @skills = Skill.order(:id).page params[:page]

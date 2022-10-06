@@ -2,7 +2,8 @@ class PokemonsController < ApplicationController
 
   def index
     if params[:search].present?
-      @pokemons = Pokemon.where("pokemons.name LIKE ?", "%#{params[:search]}%")
+      @search_name = params[:search]
+      @pokemons = Pokemon.where("LOWER(pokemons.name) LIKE ?", "%#{@search_name}%")
       @pokemons = @pokemons.page (params[:page])
     else
       @pokemons = Pokemon.order(:id).page params[:page]
@@ -20,7 +21,6 @@ class PokemonsController < ApplicationController
 
   def create
     @poke = params
-    binding.pry
     pokedex_info = Pokedex.find(pokemon_params[:pokedex_id])
     @pokemon = Pokemon.new(pokemon_params)
     @pokemon.max_health_point = pokedex_info.base_health_point
@@ -53,7 +53,11 @@ class PokemonsController < ApplicationController
   def edit_skill
     @pokemon = Pokemon.find(params[:id])
     # @skills = Skill.where("skills.element_type LIKE ?", "%#{Pokedex.find(@pokemon.pokedex_id).element_type}%").where.not()
-    @skills = Skill.where(element_type: [@pokemon.pokedex.element_type, "normal"]).where.not(id: @pokemon.skills.ids).order(:name)
+    if @pokemon.skills.ids.length < 4 
+      @skills = Skill.where(element_type: [@pokemon.pokedex.element_type, "normal"]).where.not(id: @pokemon.skills.ids).order(:name)
+    else
+      @skills = nil
+    end
   end
 
   def update_skill
