@@ -1,0 +1,26 @@
+<%= form_with model: pokemon_battle do |form| %>
+  <div class="d-flex justify-content-center">
+    <div class="my-auto w-25">
+      <%= form.label :pokemon1_id, class: "form-label" %>
+      <%= form.select(:pokemon1_id, Pokemon.all.map{ |row| [row.name.titleize, row.id] }, {}, class: "form-select") %>
+      <% pokemon_battle.errors.full_messages_for(:pokemon1_id).each do |message| %>
+        &nbsp<small style="color: red"><%= message %></small>
+      <% end %>
+    </div>
+    <div>
+      <div class="text-center">
+        <%= image_tag("versus.png", style: "max-width: 50%") %>
+      </div>
+    </div>
+    <div class="my-auto w-25">
+      <%= form.label :pokemon2_id, class: "form-label" %>
+      <%= form.select(:pokemon2_id, Pokemon.all.map{ |row| [row.name.titleize, row.id] }, {}, class: "form-select") %>
+      <% pokemon_battle.errors.full_messages_for(:pokemon2_id).each do |message| %>
+        &nbsp<small style="color: red"><%= message %></small>
+      <% end %>
+    </div>
+  </div>
+  <div class="mt-5 d-flex justify-content-center">
+    <%= form.submit(class: "btn btn-primary") %>
+  </div>
+<% end %>

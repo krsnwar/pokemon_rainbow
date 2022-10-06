@@ -1,0 +1,63 @@
+<div class="d-flex flex-column min-vh-100">
+  <%= render "layouts/navbar" %>
+
+  <div class="container mt-3">
+    <div>
+      <h1>Pokemon Battle</h1>
+    </div>
+    <div class="mt-3">
+      <%= link_to "Add Battle", new_pokemon_battle_path, class: "btn btn-primary" %>
+    </div>
+    <br>
+    <% flash.each do |message| %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Congratulations! </strong><%= message[1] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+    <br>
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Pokemon 1</th>
+          <th>Pokemon 2</th>
+          <th>Turn</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <% if @pokemon_battles.present?  %>
+          <% count = ((@current_page - 1) * 25) + 1 %>
+          <% @pokemon_battles.each do |pok_bat| %>
+            <tr>
+              <td><%= count %></td>
+              <td><%= pok_bat.pokemon1.name %></td>
+              <td><%= pok_bat.pokemon2.name %></td>
+              <td><%= pok_bat.current_turn %></td>
+              <td><%= pok_bat.state.titleize %></td>
+              <td>
+                <%= link_to ( pok_bat.current_turn == 1 ? "Begin" : "Battle" ), "#", class:"btn btn-primary #{ pok_bat.state == "finished" ? "disabled" : "" }" %>
+              </td>
+            </tr>
+            <% count += 1 %>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="6" class="text-center h5">No Data</td>
+          </tr>
+        <% end %>
+
+      </tbody>
+    </table>
+    <div class="d-flex my-5">
+      <div class="ms-auto">
+        <%= paginate @pokemon_battles %>
+      </div>
+    </div>
+  </div>
+
+  <%= render "layouts/footer" %>
+</div>
