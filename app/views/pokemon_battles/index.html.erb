@@ -39,7 +39,7 @@
               <td><%= pok_bat.current_turn %></td>
               <td><%= pok_bat.state.titleize %></td>
               <td>
-                <%= link_to ( pok_bat.current_turn == 1 ? "Begin" : "Battle" ), "#", class:"btn btn-primary #{ pok_bat.state == "finished" ? "disabled" : "" }" %>
+                <%= link_to ( pok_bat.current_turn == 1 ? "Begin" : "Battle" ), pok_bat, class:"btn btn-primary #{ pok_bat.state == "finished" ? "disabled" : "" }" %>
               </td>
             </tr>
             <% count += 1 %>

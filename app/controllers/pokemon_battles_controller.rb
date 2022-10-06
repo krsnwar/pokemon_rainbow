@@ -28,6 +28,10 @@ class PokemonBattlesController < ApplicationController
 
   end
 
+  def show
+    @pokemon_battle = PokemonBattle.find(params[:id])
+  end
+
   private
     def pokemon_battle_params
       params.require(:pokemon_battle).permit(:pokemon1_id, :pokemon2_id)
