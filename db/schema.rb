@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_05_070452) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_06_025015) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,6 +24,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_05_070452) do
     t.string "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "pokemon_battles", force: :cascade do |t|
+    t.bigint "pokemon1_id", null: false
+    t.bigint "pokemon2_id", null: false
+    t.integer "current_turn"
+    t.string "state"
+    t.bigint "pokemon_winner_id"
+    t.bigint "pokemon_loser_id"
+    t.integer "experience_gain"
+    t.integer "pokemon1_max_health_point"
+    t.integer "pokemon2_max_health_point"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pokemon1_id"], name: "index_pokemon_battles_on_pokemon1_id"
+    t.index ["pokemon2_id"], name: "index_pokemon_battles_on_pokemon2_id"
+    t.index ["pokemon_loser_id"], name: "index_pokemon_battles_on_pokemon_loser_id"
+    t.index ["pokemon_winner_id"], name: "index_pokemon_battles_on_pokemon_winner_id"
   end
 
   create_table "pokemon_skills", force: :cascade do |t|
