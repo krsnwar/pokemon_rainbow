@@ -6,7 +6,7 @@ class Pokemon < ApplicationRecord
 
   belongs_to :pokedex
   has_many :pokemon_skills
-  has_many :skills, through: :pokemon_skills, source: :skill
+  has_many :skills, through: :pokemon_skills, source: :skill, dependent: :delete_all
   has_many :pokemon_battles
 
   validates :name, uniqueness: true, presence: true
