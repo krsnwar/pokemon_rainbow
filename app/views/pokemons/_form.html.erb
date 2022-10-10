@@ -9,7 +9,7 @@
 
   <div class="mb-3">
     <%= form.label :pokedex_id, class: "form-label" %>
-    <%= form.select(:pokedex_id, Pokedex.order(:id).all.map{ |row| [row.name.titleize, row.id] }, {}, class: "form-select") %>
+    <%= form.select(:pokedex_id, Pokedex.order(:name).all.map{ |row| [row.name.titleize, row.id] }, {}, class: "form-select") %>
     <% pokemon.errors.full_messages_for(:pokedex_id).each do |message| %>
       &nbsp<small style="color: red"><%= message %></small>
     <% end %>

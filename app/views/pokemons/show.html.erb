@@ -37,11 +37,11 @@
             </tr>
             <tr>
               <td style="min-width: 300px" class="h5">Kind</td>
-              <td><%= Pokedex.find(@pokemon.pokedex_id).name.titleize %></td>
+              <td><%= @pokemon.pokedex.name.titleize %></td>
             </tr>
             <tr>
               <td class="h5">Type</td>
-              <td><%= Pokedex.find(@pokemon.pokedex_id).element_type.titleize %></td>
+              <td><%= @pokemon.pokedex.element_type.titleize %></td>
             </tr>
             <tr>
               <td class="h5">Level</td>
