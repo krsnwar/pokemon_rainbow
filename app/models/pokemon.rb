@@ -7,6 +7,7 @@ class Pokemon < ApplicationRecord
   belongs_to :pokedex
   has_many :pokemon_skills
   has_many :skills, through: :pokemon_skills, source: :skill
+  has_many :pokemon_battles
 
   validates :name, uniqueness: true, presence: true
   validates :level, presence: true, numericality: { only_integer: true, grater_than: 0 }
@@ -18,4 +19,5 @@ class Pokemon < ApplicationRecord
   validates :current_experience, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   # accept nested attributes pokemon skills (composite)
+
 end

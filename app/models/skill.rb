@@ -27,5 +27,5 @@ class Skill < ApplicationRecord
   validates :name, uniqueness: true, presence: true
   validates :power, presence: true, numericality: { only_integer: true, grater_than: 0 }
   validates :max_pp, presence: true, numericality: { only_integer: true, grater_than: 0 }
-  validates :element_type, presence: true
+  validates :element_type, presence: true, inclusion: { in: ELEMENT_TYPES,  message: "%{value} is not valid element type"}
 end
