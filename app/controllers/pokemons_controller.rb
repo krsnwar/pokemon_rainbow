@@ -8,6 +8,7 @@ class PokemonsController < ApplicationController
     else
       @pokemons = Pokemon.order(:id).page params[:page]
     end
+    @battle_calculator = PokemonBattleCalculator.new
     @current_page = params[:page].present? ? params[:page].to_i : 1
   end
 

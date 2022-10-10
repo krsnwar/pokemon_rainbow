@@ -7,7 +7,7 @@
     </div>
     <div class="d-flex justify-content-start">
       <div class="my-auto">
-        <%= link_to "Heal All", "#", class: "btn btn-success" %>
+        <%= link_to "Heal All", "#", class: "btn btn-success disabled" %>
       </div>
       &nbsp
       <div class="my-auto">
@@ -34,8 +34,7 @@
           <th>#</th>
           <th style="width: 300px">Name</th>
           <th>Level</th>
-          <th>Max Health Point</th>
-          <th>Current Health Point</th>
+          <th>HP</th>
           <th>Attack</th>
           <th>Defence</th>
           <th>Speed</th>
@@ -51,13 +50,17 @@
               <td><%= count %></td>
               <td><%= link_to pokemon.name.titleize, pokemon %></td>
               <td><%= pokemon.level %></td>
-              <td><%= pokemon.max_health_point %></td>
-              <td><%= pokemon.current_health_point %></td>
+              <td style="width: 200px">
+                <div class="progress position-relative text-center">
+                  <span class="mx-auto position-absolute <%= ((pokemon.current_health_point/pokemon.max_health_point.to_f )*100) < 50 ? "" : "text-white" %>" style="left: 0; right: 0;"><%= "#{pokemon.current_health_point}/#{pokemon.max_health_point}" %></span>
+                  <div class="progress-bar <%= @battle_calculator.health_background(((pokemon.current_health_point/pokemon.max_health_point.to_f )*100)) %>" role="progressbar" aria-label="Example with label" style="width: <%= ((pokemon.current_health_point/pokemon.max_health_point.to_f )*100) %>%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </td>
               <td><%= pokemon.attack %></td>
               <td><%= pokemon.defence %></td>
               <td><%= pokemon.speed %></td>
               <td><%= pokemon.current_experience %></td>
-              <td><%= link_to "Heal", "#", class: "btn btn-success" %></td>
+              <td><%= link_to "Heal", "#", class: "btn btn-success disabled" %></td>
             </tr>
             <% count += 1 %>
           <% end %>
