@@ -3,8 +3,8 @@
 
   <div class="container mt-3">
     <% flash.each do |message| %>
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong></strong>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= message[1] %>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     <% end %>
@@ -12,20 +12,114 @@
   </div>
   <div class="container my-auto d-flex flex-column">
     <div class="d-flex justify-content-center">
+
+      <%# LEFT POKEMON %>
       <div class="my-auto text-center">
+
+        <% if !@ongoing && (@pokemon_battle.pokemon_winner == @pokemon_battle.pokemon1) %>
+          <%= image_tag("winner.png", style: "max-width: 10%; position: absolute; margin-top: 100px;") %>
+        <% end %>
+
         <h5><%= @pokemon_battle.pokemon1.name %></h5>
         <%= image_tag(@pokemon_battle.pokemon1.pokedex.image_url, class: "img-thumbnail", style: "max-width: 50%") %>
-      </div>
-
-      <div>
-        <div class="my-auto text-center">
-          <%= image_tag("versus.png", style: "max-width: 50%") %>
+        <div class="mt-3 w-50 mx-auto">
+          <div class="progress position-relative">
+            <span class="mx-auto position-absolute <%= @pokemon1_hp < 50 ? "" : "text-white" %>" style="left: 0; right:0"><%= "#{@pokemon_battle.pokemon1.current_health_point}/#{@pokemon_battle.pokemon1.max_health_point}" %></span>
+            <div class="progress-bar <%= @battle_calculator.health_background(@pokemon1_hp) %>" role="progressbar" aria-label="Example with label" style="width: <%= @pokemon1_hp %>%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
         </div>
+        <div class="mt-3 w-50 mx-auto">
+          <table class="table align-middle">
+            <tbody>
+              <tr>
+                <td class="h6">Kind</td>
+                <td><%= @pokemon_battle.pokemon1.pokedex.name.titleize %></td>
+              </tr>
+              <tr>
+                <td class="h6">Type</td>
+                <td><%= @pokemon_battle.pokemon1.pokedex.element_type.titleize %></td>
+              </tr>
+              <tr>
+                <td class="h6">Level</td>
+                <td><%= @pokemon_battle.pokemon1.level %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <% if @ongoing && @pokemon_battle.current_turn.odd? %>
+          <div class="mt-3 w-75 mx-auto">
+            <%= render "attack_form", pokemon: @pokemon_battle.pokemon1 %>
+          </div>
+        <% end %>
       </div>
 
+      <%# VERSUS AND INFO %>
       <div class="my-auto text-center">
+        <%= image_tag("versus.png", style: "max-width: 50%") %>
+        <br>
+        <br>
+
+        <% if @ongoing %>
+
+          <% if @pokemon_battle.current_turn.odd? %>
+            <h4>
+              <%= "#{@pokemon_battle.pokemon1.name}'s turn" %>
+            </h4>
+          <% else %>
+            <h4>
+              <%= "#{@pokemon_battle.pokemon2.name}'s turn" %>
+            </h4>
+          <% end %>
+
+        <% else %>
+          <h4>
+            <%= "Winner : #{@pokemon_battle.pokemon_winner.name}" %>
+          </h4>
+          <span>
+            <%= "Exp gained : #{@pokemon_battle.experience_gain}" %>
+          </span>
+        <% end %>
+
+      </div>
+
+      <%# RIGTH POKEMON %>
+      <div class="my-auto text-center">
+
+        <% if !@ongoing && (@pokemon_battle.pokemon_winner == @pokemon_battle.pokemon2) %>
+          <%= image_tag("winner.png", style: "max-width: 10%; position: absolute; margin-top: 100px;") %>
+        <% end %>
+
         <h5><%= @pokemon_battle.pokemon2.name %></h5>
         <%= image_tag(@pokemon_battle.pokemon2.pokedex.image_url, class: "img-thumbnail", style: "max-width: 50%") %>
+        <div class="mt-3 w-50 mx-auto">
+          <div class="progress position-relative">
+            <span class="mx-auto position-absolute <%= @pokemon2_hp < 50 ? "" : "text-white" %>" style="left: 0; right:0"><%= "#{@pokemon_battle.pokemon2.current_health_point}/#{@pokemon_battle.pokemon2.max_health_point}" %></span>
+            <div class="progress-bar <%= @battle_calculator.health_background(@pokemon2_hp) %>" role="progressbar" aria-label="Example with label" style="width: <%= @pokemon2_hp %>%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+        <div class="mt-3 w-50 mx-auto">
+          <table class="table align-middle">
+            <tbody>
+              <tr>
+                <td class="h6">Kind</td>
+                <td><%= @pokemon_battle.pokemon2.pokedex.name.titleize %></td>
+              </tr>
+              <tr>
+                <td class="h6">Type</td>
+                <td><%= @pokemon_battle.pokemon2.pokedex.element_type.titleize %></td>
+              </tr>
+              <tr>
+                <td class="h6">Level</td>
+                <td><%= @pokemon_battle.pokemon2.level %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <% if @ongoing && @pokemon_battle.current_turn.even? %>
+          <div class="mt-3 w-75 mx-auto">
+            <%= render "attack_form", pokemon: @pokemon_battle.pokemon2 %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

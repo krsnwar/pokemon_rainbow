@@ -1,0 +1,15 @@
+<%= form_with model: @pokemon_battle do |form| %>
+  <div class="mb-3">
+    <%= form.label :pokemon_skill, "Choose Skill", class: "form-label h6" %>
+    <%= form.select(:pokemon_skill, pokemon.pokemon_skills.where.not(current_pp: "0").map{ |row| ["#{row.skill.name.titleize} - PP : #{row.current_pp}", row.skill_id] }, {:prompt => "Choose Skill"}, class: "form-select") %>
+    <% pokemon.errors.full_messages_for(:name).each do |message| %>
+      &nbsp<small style="color: red"><%= message %></small>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Attack", class: "btn btn-primary" %>
+    &nbsp
+    <%= link_to "Surrender", surrender_pokemon_battle_path, class: "btn btn-danger" %>
+  </div>
+<% end %>
